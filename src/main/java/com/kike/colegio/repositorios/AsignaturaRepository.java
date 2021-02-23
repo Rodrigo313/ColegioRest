@@ -16,10 +16,12 @@ public interface AsignaturaRepository extends CrudRepository<AsignaturaEntity, I
 			+ "AND a.nombre LIKE CONCAT ('%',:nombre,'%') "
 			+ "AND (a.curso LIKE CONCAT ('%',:curso,'%' ) or :curso is null )"
 			+ "AND (a.tasa LIKE CONCAT ('%',:tasa,'%') or :tasa is null )")
-			  List<AsignaturaDTO>buscaAsignaturaPorIdNombreCursoTasa(
-					  @Param("id") Integer id,
-					  @Param("nombre") String nombre,
-					  @Param("curso") Integer curso,
-					  @Param("tasa") Double tasa);
+			  List<AsignaturaDTO>buscaAsignaturaPorIdNombreCursoTasa(@Param("id") Integer id, @Param("nombre") String nombre, @Param("curso") Integer curso, @Param("tasa") Double tasa);
 	
+	
+	@Query(value = "select new com.kike.colegio.dtos.AsignaturaDTO (a.id, a.nombre, a.curso, a.tasa) "
+			+ "FROM com.kike.colegio.entities.AsignaturaEntity a "
+			+ "WHERE (a.id LIKE CONCAT('%',:id,'%') or :id is null) "
+			+ "AND a.nombre LIKE CONCAT ('%',:nombre,'%') ")
+			  List<AsignaturaDTO>obtenerAsignaturaporIdyNombre(@Param("id") Integer id, @Param("nombre") String nombre);
 }
